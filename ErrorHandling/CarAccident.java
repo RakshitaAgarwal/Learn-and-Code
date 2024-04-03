@@ -1,5 +1,7 @@
 package ErrorHandling;
 
+import ErrorHandling.CustomExceptions.*;
+
 public class CarAccident {
     public static void main(String[] args) {
         try {
@@ -63,17 +65,5 @@ public class CarAccident {
 
     public static void clearRoad() {
         System.out.println("Road is being cleared after the accident.");
-    }
-}
-
-class MajorCarAccidentException extends Exception {
-    public MajorCarAccidentException(String message) {
-        super(message);
-    }
-}
-
-class MinorCarAccidentException extends Exception {
-    public MinorCarAccidentException(String message) {
-        super(message);
     }
 }
