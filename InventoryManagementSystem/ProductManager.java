@@ -26,7 +26,7 @@ public class ProductManager {
         }
     }
 
-    public void delete(Product product) throws InvalidProductStateException{
+    public void delete(Product product) throws InvalidProductStateException {
         try {
             product.validateData();
             if (productExists(product.getProductId())) {
@@ -58,8 +58,10 @@ public class ProductManager {
     public ArrayList<Product> getProducts() throws DataAccessException {
         try {
             boolean isConnected = true;
-            if (!isConnected) throw new ConnectionFailureException("Network Failure");
-            if (availableProducts.isEmpty()) throw new NegativeInventoryException("No products available");
+            if (!isConnected)
+                throw new ConnectionFailureException("Network Failure");
+            if (availableProducts.isEmpty())
+                throw new NegativeInventoryException("No products available");
             return availableProducts;
         } catch (NegativeInventoryException | ConnectionFailureException e) {
             System.err.println(e.getMessage());
@@ -70,7 +72,8 @@ public class ProductManager {
     public void sell(Product product, int quantity) throws InvalidProductStateException {
         try {
             product.validateData();
-            if ( quantity <= 0) throw new InsufficientProductQuantityException("required quantity must be a positive number.");
+            if (quantity <= 0)
+                throw new InsufficientProductQuantityException("required quantity must be a positive number.");
             if (productExists(product.getProductId())) {
                 Product productToSell = findProductById(product.getProductId());
                 if (productToSell.getQuantity() > quantity) {
@@ -86,7 +89,7 @@ public class ProductManager {
             }
         } catch (InsufficientProductQuantityException e) {
             System.out.println(e.getMessage());
-        } catch(ProductOutOfStockException e) {
+        } catch (ProductOutOfStockException e) {
             System.err.println(e.getMessage());
         } catch (ProductNotFoundException e) {
             System.out.println(e.getMessage());

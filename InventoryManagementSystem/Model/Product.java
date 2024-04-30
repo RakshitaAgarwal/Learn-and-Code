@@ -36,13 +36,13 @@ public class Product {
     }
 
     public void validateData() throws InvalidProductStateException {
-        if (this.name == null || this.name.isEmpty()) {
+        if (this.productId <= 0) {
+            throw new InvalidProductStateException("Invalid Product Id");
+        } else if (this.name == null || this.name.isEmpty()) {
             throw new InvalidProductStateException("Product name is required");
-        }
-        else if (this.price <= 0) {
+        } else if (this.price <= 0) {
             throw new InvalidProductStateException("Product price is required");
-        }
-        else if (this.quantity <= 0) {
+        } else if (this.quantity <= 0) {
             throw new InvalidProductStateException("Product quantity is required");
         }
     }
