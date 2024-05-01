@@ -12,7 +12,7 @@ public class ProductManager {
     public void add(Product product) throws InvalidProductStateException {
         try {
             product.validateData();
-            if (productExists(product.getProductId())) {
+            if (isProductAvailable(product.getProductId())) {
                 throw new ProductAlreadyExistsException("Product already exists");
             } else
                 availableProducts.add(product);
@@ -29,9 +29,9 @@ public class ProductManager {
     public void delete(Product product) throws InvalidProductStateException {
         try {
             product.validateData();
-            if (productExists(product.getProductId())) {
+            if (isProductAvailable(product.getProductId()))
                 availableProducts.remove(product);
-            } else
+            else
                 throw new ProductNotFoundException("Product Not found in the Inventory");
         } catch (ProductNotFoundException e) {
             System.out.println(e.getMessage());
@@ -43,8 +43,8 @@ public class ProductManager {
     public void update(Product product) throws InvalidProductStateException {
         try {
             product.validateData();
-            if (productExists(product.getProductId())) {
-                availableProducts.set(availableProducts.indexOf(findProductById(product.getProductId())), product);
+            if (isProductAvailable(product.getProductId())) {
+                availableProducts.set(availableProducts.indexOf(getProductById(product.getProductId())), product);
             } else
                 throw new ProviderNotFoundException("Product Not found in the Inventory");
 
@@ -74,8 +74,8 @@ public class ProductManager {
             product.validateData();
             if (quantity <= 0)
                 throw new InsufficientProductQuantityException("required quantity must be a positive number.");
-            if (productExists(product.getProductId())) {
-                Product productToSell = findProductById(product.getProductId());
+            if (isProductAvailable(product.getProductId())) {
+                Product productToSell = getProductById(product.getProductId());
                 if (productToSell.getQuantity() > quantity) {
                     productToSell.setQuantity(productToSell.getQuantity() - quantity);
                     update(productToSell);
@@ -98,14 +98,14 @@ public class ProductManager {
         }
     }
 
-    private Product findProductById(int productId) throws ProductNotFoundException {
+    private Product getProductById(int productId) throws ProductNotFoundException {
         return availableProducts.stream()
                 .filter(product -> product.getProductId() == productId)
                 .findFirst()
                 .orElseThrow(() -> new ProductNotFoundException("Product Not found in the Inventory"));
     }
 
-    private boolean productExists(int productId) {
+    private boolean isProductAvailable(int productId) {
         return availableProducts.stream()
                 .anyMatch(product -> product.getProductId() == productId);
     }
