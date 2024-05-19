@@ -1,4 +1,4 @@
-package DependencyInversionPrinciple;
+package DependencyInversionPrinciple.model;
 
 public class Employee {
     private String name;

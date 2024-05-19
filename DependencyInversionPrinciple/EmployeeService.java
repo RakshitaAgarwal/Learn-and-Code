@@ -1,5 +1,7 @@
 package DependencyInversionPrinciple;
 
+import DependencyInversionPrinciple.model.Employee;
+
 public class EmployeeService {
     private DatabaseAccess databaseAccess;
 
